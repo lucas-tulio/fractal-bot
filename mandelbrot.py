@@ -1,8 +1,8 @@
 from __future__ import division
 from PIL import Image, ImageDraw
 
-width = 400
-height = 400
+width = 1280
+height = 800
 
 # Create the image
 im = Image.new("RGB", (width, height))
@@ -21,7 +21,7 @@ maxIterations = 255
 for y in range(0, height):
   for x in range(0, width):
 
-    real = (width / height) * (x - width / 1.3) / (0.5 * width)
+    real = (width / height) * (x - width / 2.0) / (0.5 * width)
     imaginary = (y - height / 2.0) / (0.5 * height)
 
     # Zero the new and old real and imaginary parts
@@ -53,6 +53,10 @@ for y in range(0, height):
     #} else {
     #  pixels.putPixel(new Color(i % colorFactor[0], i % colorFactor[1], i % colorFactor[2]));
     #}
+
+  # Print progress
+  if y % 10 == 0:
+    print str((y / height) * 100) + "%"
 
 # Save
 im.save("test.png")
