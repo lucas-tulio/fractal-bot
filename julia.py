@@ -74,9 +74,9 @@ yOffset = getArg("yOffset", 0)
 print "yOffset: " + str(yOffset)
 
 cr = getArg("cr", -1.037)
-print "cr = " + str(cr)
+print "cr: " + str(cr)
 
 ci = getArg("ci", 0.17)
-print "ci = " + str(ci)
+print "ci: " + str(ci)
 
 generateFractal()
