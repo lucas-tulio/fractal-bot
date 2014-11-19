@@ -9,17 +9,31 @@ import json
 latestId = 0
 
 def sendFractal(latestId, tweet):
+
   print "got one"
   if latestId == 0 or latestId != tweet["id"]:
   
     print "this is a new one! Generating fractal..."
     tweetText = tweet["text"]
-    os.system("python mandelbrot.py " + tweetText[13:])
+
+    parameters = tweetText[13:]
+
+    fractalType = parameters[:10]
+    if fractalType == "mandelbrot":
+      fractalType = "mandelbrot"
+    else:
+      fractalType = parameters[:5]
+      if fractalType == "julia":
+        fractalType = "julia"
+      else:
+        fractalType = "mandelbrot"
+
+    os.system("python " + fractalType + ".py " + parameters)
 
     print "Sending tweet"
     latestId = tweet["id"]
     tweetUser = tweet["user"]
-    api.update_with_media("mandelbrot.png", "@" + tweetUser["screen_name"] + " Here's your fractal", in_reply_to_status_id=latestId)
+    api.update_with_media(fractalType + ".png", "@" + tweetUser["screen_name"] + " Here's your fractal", in_reply_to_status_id=latestId)
     print "done!"
 
 class listener(StreamListener):
