@@ -61,7 +61,7 @@ def generateFractal():
   im.save("julia.png")
 
 # Read Parameters
-width = 400
+width = 600
 height = 400
 
 zoom = getArg("zoom", 1.0)
