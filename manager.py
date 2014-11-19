@@ -1,6 +1,7 @@
 import tweepy
 
-# Read parameters
+# Read parameters. They should be in the order shown below and
+# follow the format: parameter=value
 f = open("config.txt", "r")
 consumer_key = f.readline().split("=")[1].rstrip("\n")
 consumer_secret = f.readline().split("=")[1].rstrip("\n")
