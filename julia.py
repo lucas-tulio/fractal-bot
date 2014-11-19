@@ -1,8 +1,13 @@
 from __future__ import division
 from PIL import Image, ImageDraw
 
-width = 1280
-height = 800
+width = 400
+height = 400
+
+# Parameters
+zoom = 2.4
+xOffset = 0
+yOffset = -0.6
 
 # Create the image
 im = Image.new("RGB", (width, height))
@@ -21,8 +26,8 @@ maxIterations = 255
 for y in range(0, height):
   for x in range(0, width):
 
-    newR = (width / height) * (x - width / 2.0) / (0.5 * width)
-    newI = (y - height / 2.0) / (0.5 * height)
+    newR = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + xOffset
+    newI = (y - height / 2.0) / (0.5 * zoom * height) + yOffset
 
     # Start iterating
     for i in range(0, maxIterations):
@@ -41,19 +46,12 @@ for y in range(0, height):
 
     draw.point([(x, y)], fill=(i, i, i))
 
-    # Color, based on the number of iterations and the colorScheme
-    #if(colorFactor[0] == 1 && colorFactor[1] == 1 && colorFactor[2] == 1) {
-    #  pixels.putPixel(new Color(i, i, i));
-    #} else {
-    #  pixels.putPixel(new Color(i % colorFactor[0], i % colorFactor[1], i % colorFactor[2]));
-    #}
-
   # Print progress
   if y % 10 == 0:
     print str((y / height) * 100) + "%"
 
 # Save
-im.save("test.png")
+im.save("julia.png")
 
 
 
