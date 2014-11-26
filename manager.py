@@ -10,31 +10,37 @@ latestId = 0
 
 def sendFractal(latestId, tweet):
 
-  print "got one"
-  if latestId == 0 or latestId != tweet["id"]:
-  
-    print "this is a new one! Generating fractal..."
-    tweetText = tweet["text"]
+  print "got a mention!"
 
-    parameters = tweetText[13:]
+  tweetText = tweet["text"]
+  if "fractal" in tweetText[13:] or "mandelbrot" in tweetText[13:] or "julia" in tweetText[13:]:
 
-    fractalType = parameters[:10]
-    if fractalType == "mandelbrot":
-      fractalType = "mandelbrot"
-    else:
-      fractalType = parameters[:5]
-      if fractalType == "julia":
-        fractalType = "julia"
-      else:
+    if latestId == 0 or latestId != tweet["id"]:
+    
+      print "Generating fractal..."
+      
+
+      parameters = tweetText[13:]
+
+      fractalType = parameters[:10]
+      if fractalType == "mandelbrot":
         fractalType = "mandelbrot"
+      else:
+        fractalType = parameters[:5]
+        if fractalType == "julia":
+          fractalType = "julia"
+        else:
+          fractalType = "mandelbrot"
 
-    os.system("python " + fractalType + ".py " + parameters)
+      os.system("python " + fractalType + ".py " + parameters)
 
-    print "Sending tweet"
-    latestId = tweet["id"]
-    tweetUser = tweet["user"]
-    api.update_with_media(fractalType + ".png", "@" + tweetUser["screen_name"] + " Here's your fractal", in_reply_to_status_id=latestId)
-    print "done!"
+      print "Sending tweet"
+      latestId = tweet["id"]
+      tweetUser = tweet["user"]
+      api.update_with_media(fractalType + ".png", "@" + tweetUser["screen_name"] + " Here's your fractal", in_reply_to_status_id=latestId)
+      print "done!"
+  else:
+    print "but it's not a fractal request!"
 
 class listener(StreamListener):
   def on_data(self, data):
