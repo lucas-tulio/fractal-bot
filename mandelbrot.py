@@ -35,7 +35,7 @@ def generateFractal():
   for y in range(0, height):
     for x in range(0, width):
 
-      real = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + offsetX
+      real = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + offsetX - 0.5
       imaginary = (y - height / 2.0) / (0.5 * zoom * height) + offsetY
 
       # Zero the new and old real and imaginary parts
