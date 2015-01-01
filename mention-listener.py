@@ -1,10 +1,6 @@
-import tweepy
-import time
-import os
-import sys
+import tweepy, time, os, sys, json
 from tweepy import Stream
 from tweepy.streaming import StreamListener
-import json
 
 latestId = 0
 
