@@ -45,7 +45,10 @@ def generateFractal():
         if newR * newR + newI * newI > 4.0:
           break
 
-      draw.point([(x, y)], fill=(i, i, i))
+      r = int(i)
+      g = int(i)
+      b = int(i)
+      draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
     if y % 10 == 0:
