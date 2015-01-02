@@ -2,20 +2,6 @@ from __future__ import division
 from PIL import Image, ImageDraw
 import sys
 
-def getArg(argToGet, default):
-  
-  splitArgs = sys.argv[1:]
-  for param in splitArgs:
-    splitParam = param.split("=")
-    paramName = splitParam[0]
-    try:
-      if paramName == argToGet:
-        return float(splitParam[1])
-    except:
-      print "invalid arg"
-
-  return default
-
 def generateFractal():
 
   # Create the image
@@ -72,13 +58,9 @@ def generateFractal():
 width = 600
 height = 400
 
-zoom = getArg("zoom", 1.0)
-print "zoom: " + str(zoom)
+zoom = 1.0
 
-offsetX = getArg("offsetX", 0)
-print "offsetX: " + str(offsetX)
-
-offsetY = getArg("offsetY", 0)
-print "offsetY: " + str(offsetY)
+offsetX = 0
+offsetY = 0
 
 generateFractal()
