@@ -2,3 +2,4 @@
 *.png
 *.jpeg
 config.txt
+deploy.sh
