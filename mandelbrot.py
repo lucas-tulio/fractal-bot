@@ -1,6 +1,6 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-import sys
+import sys, math
 
 def generateFractal():
 
@@ -42,13 +42,19 @@ def generateFractal():
         newI = 2.0 * oldR * oldI + imaginary
         
         # Exit condition
+        mod = newR * newR + newI * newI
         if newR * newR + newI * newI > 4.0:
-          break
 
-      r = int(i)
-      g = int(i)
-      b = int(i)
-      draw.point([(x, y)], fill=(r, g, b))
+          mod = math.sqrt(mod)
+          if mod == 0 or mod == 1:
+            smooth = 0
+          else:
+            smooth = i - math.log(math.log(mod)) / math.log(2)
+          r = int((smooth * 1.0) % 255)
+          g = int((smooth * 0.0) % 255)
+          b = int((smooth * 0.5) % 255)
+          draw.point([(x, y)], fill=(r, g, b))
+          break
 
     # Print progress
     if y % 10 == 0:
@@ -58,8 +64,8 @@ def generateFractal():
   im.save("mandelbrot.png")
 
 # Read Parameters
-width = 600
-height = 400
+width = 900
+height = 600
 
 zoom = 1.0
 
