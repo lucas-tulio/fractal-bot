@@ -1,6 +1,6 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-import sys
+import sys, random
 
 def generateFractal():
 
@@ -37,9 +37,9 @@ def generateFractal():
         if newR * newR + newI * newI > 4.0:
           break
 
-      r = int(i)
-      g = int(i)
-      b = int(i)
+      r = int(i % rColor)
+      g = int(i % gColor)
+      b = int(i % bColor)
       draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
@@ -50,15 +50,19 @@ def generateFractal():
   im.save("julia.png")
 
 # Read Parameters
-width = 600
-height = 400
+width = 900
+height = 600
 
-zoom = 1.0
+zoom = 3.0
 
 xOffset = 0
 yOffset = 0
 
-cr = -1.037
-ci = 0.17
+cr = -0.8
+ci = 0.156
+
+rColor = random.randint(0, 255)
+gColor = random.randint(0, 255)
+bColor = random.randint(0, 255)
 
 generateFractal()
