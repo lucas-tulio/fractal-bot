@@ -1,7 +1,7 @@
 fractal-bot
 ===========
 
-Python script that draws fractals given a set of parameters
+Python script that draws random fractals. https://twitter.com/fractal_bot
 
 #### Setup
 
