@@ -1,6 +1,6 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-import sys, random
+import sys, random, math, colorsys
 
 def generateFractal():
 
@@ -21,6 +21,7 @@ def generateFractal():
 
       newR = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + xOffset
       newI = (y - height / 2.0) / (0.5 * zoom * height) + yOffset
+      smooth = math.exp(-math.sqrt(newR*newR + newI*newI))
 
       # Start iterating
       for i in range(0, maxIterations):
@@ -32,15 +33,17 @@ def generateFractal():
         # Calculate the new real and imaginary parts
         newR = (oldR * oldR) - (oldI * oldI) + cr
         newI = 2.0 * oldR * oldI + ci
+
+        smooth += math.exp(-math.sqrt(newR*newR + newI*newI))
         
         # Exit condition
-        if newR * newR + newI * newI > 4.0:
+        if newR*newR + newI*newI > 4.0:
           break
 
-      r = int(i % rColor)
-      g = int(i % gColor)
-      b = int(i % bColor)
-      draw.point([(x, y)], fill=(r, g, b))
+        r = int(smooth * rColor * i)
+        g = int(smooth * gColor * i)
+        b = int(smooth * bColor * i)
+        draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
     if y % 10 == 0:
@@ -50,10 +53,10 @@ def generateFractal():
   im.save("julia.png")
 
 # Read Parameters
-width = 900
-height = 600
+width = 1360
+height = 768
 
-zoom = 3.0
+zoom = 1.0
 
 xOffset = 0
 yOffset = 0
@@ -61,8 +64,8 @@ yOffset = 0
 cr = -0.8
 ci = 0.156
 
-rColor = random.randint(0, 255)
-gColor = random.randint(0, 255)
-bColor = random.randint(0, 255)
+rColor = random.random()
+gColor = random.random()
+bColor = random.random()
 
 generateFractal()
