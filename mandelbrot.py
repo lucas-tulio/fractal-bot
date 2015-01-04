@@ -80,8 +80,8 @@ height = 768
 
 zoom = 1.0
 
-offsetX = 0
-offsetY = 0
+offsetX = 0.0
+offsetY = 0.0
 
 rColor = random.random()
 gColor = random.random()
