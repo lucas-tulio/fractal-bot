@@ -13,7 +13,7 @@ def generateFractal():
   newI = 0.0
   oldR = 0.0
   oldI = 0.0
-  maxIterations = 255
+  maxIterations = 1024
 
   # Draw
   for y in range(0, height):
@@ -40,9 +40,9 @@ def generateFractal():
         if newR*newR + newI*newI > 4.0:
           break
 
-        r = int(smooth * rColor * i)
-        g = int(smooth * gColor * i)
-        b = int(smooth * bColor * i)
+        r = int(smooth * rColor * (i / 4))
+        g = int(smooth * gColor * (i / 4))
+        b = int(smooth * bColor * (i / 4))
         draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
@@ -61,8 +61,8 @@ zoom = 1.0
 xOffset = 0
 yOffset = 0
 
-cr = -0.8
-ci = 0.156
+cr = -0.1
+ci = 0.651
 
 rColor = random.random()
 gColor = random.random()
