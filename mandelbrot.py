@@ -55,16 +55,16 @@ def generateFractal():
           smooth = i - lg / math.log(2)
 
           # Smooth has a value ranging from 0 to 255
-          r = int((smooth * rColor))
-          g = int((smooth * gColor))
-          b = int((smooth * bColor))
+          r = int(smooth * rColor * rBright)
+          g = int(smooth * gColor * gBright)
+          b = int(smooth * bColor * bBright)
           draw.point([(x, y)], fill=(r, g, b))
           break
 
-        elif i == maxIterations - 1: # Draw inside the forms
-          r = int(255)
-          g = int(255)
-          b = int(255)
+        elif i == maxIterations - 1: # End of loop, draw inside the forms
+          r = int(255 * rColor * rBright)
+          g = int(255 * gColor * gBright)
+          b = int(255 * bColor * bBright)
           draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
@@ -75,8 +75,8 @@ def generateFractal():
   im.save("mandelbrot.png")
 
 # Read Parameters
-width = 1360
-height = 768
+width = 1280
+height = 720
 
 zoom = 1.0
 
@@ -86,5 +86,8 @@ offsetY = 0.0
 rColor = random.random()
 gColor = random.random()
 bColor = random.random()
+rBright = 10 # Min 1
+gBright = 10 # Min 1
+bBright = 10 # Min 1
 
 generateFractal()
