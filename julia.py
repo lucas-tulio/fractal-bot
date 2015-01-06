@@ -1,6 +1,6 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-import sys, random, math, colorsys
+import sys, random, math
 
 def generateFractal():
 
@@ -14,6 +14,7 @@ def generateFractal():
   oldR = 0.0
   oldI = 0.0
   maxIterations = 1024
+  smoothDiv = maxIterations / 256
 
   # Draw
   for y in range(0, height):
@@ -35,15 +36,19 @@ def generateFractal():
         newI = 2.0 * oldR * oldI + ci
 
         smooth += math.exp(-math.sqrt(newR*newR + newI*newI))
-        
+
         # Exit condition
         if newR*newR + newI*newI > 4.0:
+          r = int(smooth / smoothDiv * rColor * rBright)
+          g = int(smooth / smoothDiv * gColor * gBright)
+          b = int(smooth / smoothDiv * bColor * bBright)
+          draw.point([(x, y)], fill=(r, g, b))
           break
-
-        r = int(smooth * rColor * (i / 4))
-        g = int(smooth * gColor * (i / 4))
-        b = int(smooth * bColor * (i / 4))
-        draw.point([(x, y)], fill=(r, g, b))
+        elif i == maxIterations - 1: # Last iteration, draw with the brightiest value of each channel
+          r = int(255 * rColor * rBright)
+          g = int(255 * gColor * gBright)
+          b = int(255 * bColor * bBright)
+          draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
     if y % 10 == 0:
@@ -53,8 +58,8 @@ def generateFractal():
   im.save("julia.png")
 
 # Read Parameters
-width = 1360
-height = 768
+width = 1280
+height = 720
 
 zoom = 1.0
 
@@ -67,5 +72,8 @@ ci = 0.651
 rColor = random.random()
 gColor = random.random()
 bColor = random.random()
+rBright = 3 # Min 1
+gBright = 3 # Min 1
+bBright = 3 # Min 1
 
 generateFractal()
