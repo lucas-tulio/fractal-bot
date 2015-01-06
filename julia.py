@@ -13,8 +13,8 @@ def generateFractal():
   newI = 0.0
   oldR = 0.0
   oldI = 0.0
-  maxIterations = 1024
-  smoothDiv = maxIterations / 256
+  maxIterations = 255
+  smoothDiv = maxIterations / 255
 
   # Draw
   for y in range(0, height):
@@ -66,14 +66,14 @@ zoom = 1.0
 xOffset = 0
 yOffset = 0
 
-cr = -0.1
-ci = 0.651
+cr = -0.79
+ci = 0.15
 
 rColor = random.random()
 gColor = random.random()
 bColor = random.random()
-rBright = 3 # Min 1
-gBright = 3 # Min 1
-bBright = 3 # Min 1
+rBright = 10 # Min 1
+gBright = 10 # Min 1
+bBright = 10 # Min 1
 
 generateFractal()
