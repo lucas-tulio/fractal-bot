@@ -39,15 +39,30 @@ def generateFractal():
 
         # Exit condition
         if newR*newR + newI*newI > 4.0:
+
           r = int(smooth / smoothDiv * rColor * rBright)
           g = int(smooth / smoothDiv * gColor * gBright)
           b = int(smooth / smoothDiv * bColor * bBright)
+
+          if invertColors:
+            r = 255-r
+            g = 255-g
+            b = 255-b
+
           draw.point([(x, y)], fill=(r, g, b))
           break
+
         elif i == maxIterations - 1: # Last iteration, draw with the brightiest value of each channel
+
           r = int(255 * rColor * rBright)
           g = int(255 * gColor * gBright)
           b = int(255 * bColor * bBright)
+          
+          if invertColors:
+            r = 255-r
+            g = 255-g
+            b = 255-b
+
           draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
@@ -57,17 +72,19 @@ def generateFractal():
   # Save
   im.save("julia.png")
 
-# Read Parameters
+# Parameters
 width = 1280
 height = 720
 
 zoom = 1.0
 
-xOffset = 0
-yOffset = 0
+xOffset = 0.0
+yOffset = 0.0
 
 cr = -0.79
 ci = 0.15
+
+invertColors = False
 
 rColor = random.random()
 gColor = random.random()

@@ -53,6 +53,12 @@ def generateFractal():
           r = int(smooth * rColor * rBright * smoothDiv)
           g = int(smooth * gColor * gBright * smoothDiv)
           b = int(smooth * bColor * bBright * smoothDiv)
+
+          if invertColors:
+            r = 255-r
+            g = 255-g
+            b = 255-b
+
           draw.point([(x, y)], fill=(r, g, b))
           break
 
@@ -60,6 +66,12 @@ def generateFractal():
           r = int(255 * rColor * rBright)
           g = int(255 * gColor * gBright)
           b = int(255 * bColor * bBright)
+
+          if invertColors:
+            r = 255-r
+            g = 255-g
+            b = 255-b
+          
           draw.point([(x, y)], fill=(r, g, b))
 
     # Print progress
@@ -77,6 +89,8 @@ zoom = 1.0
 
 offsetX = 0.0
 offsetY = 0.0
+
+invertColors = False
 
 rColor = random.random()
 gColor = random.random()
