@@ -9,22 +9,17 @@ def generateFractal():
   draw = ImageDraw.Draw(im)
 
   # Set control
-  real = 0.0
-  imaginary = 0.0
-  newR = 0.0
-  newI = 0.0
-  oldR = 0.0
-  oldI = 0.0
   maxIterations = 255
+  smoothDiv = maxIterations / 255
 
   # Draw
   for y in range(0, height):
     for x in range(0, width):
 
-      real = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + offsetX - 0.5
-      imaginary = (y - height / 2.0) / (0.5 * zoom * height) + offsetY
+      realP = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + offsetX - 0.5
+      imaginaryP = (y - height / 2.0) / (0.5 * zoom * height) + offsetY
 
-      # Zero the new and old real and imaginary parts
+      # Zero the old real and imaginary parts
       newR = 0.0
       newI = 0.0
       oldR = 0.0
@@ -38,8 +33,8 @@ def generateFractal():
         oldI = newI
         
         # Calculate the new real and imaginary parts
-        newR = (oldR * oldR) - (oldI * oldI) + real
-        newI = 2.0 * oldR * oldI + imaginary
+        newR = (oldR * oldR) - (oldI * oldI) + realP
+        newI = 2.0 * oldR * oldI + imaginaryP
         
         # Exit condition
         mod = newR * newR + newI * newI
@@ -52,12 +47,12 @@ def generateFractal():
             lg = math.log(math.log(mod))
           except:
             lg = 0
-          smooth = i - lg / math.log(2)
-
+          smooth = (i / smoothDiv) - lg / math.log(2)
+          
           # Smooth has a value ranging from 0 to 255
-          r = int(smooth * rColor * rBright)
-          g = int(smooth * gColor * gBright)
-          b = int(smooth * bColor * bBright)
+          r = int(smooth * rColor * rBright * smoothDiv)
+          g = int(smooth * gColor * gBright * smoothDiv)
+          b = int(smooth * bColor * bBright * smoothDiv)
           draw.point([(x, y)], fill=(r, g, b))
           break
 
