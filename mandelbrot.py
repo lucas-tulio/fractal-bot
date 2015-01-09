@@ -63,9 +63,15 @@ def generateFractal():
           break
 
         elif i == maxIterations - 1: # End of loop, draw inside the forms
-          r = int(255 * rColor * rBright)
-          g = int(255 * gColor * gBright)
-          b = int(255 * bColor * bBright)
+          
+          if (whiteCenter):
+            r = int(255)
+            g = int(255)
+            b = int(255)
+          else:
+            r = int(255 * rColor * rBright)
+            g = int(255 * gColor * gBright)
+            b = int(255 * bColor * bBright)
 
           if invertColors:
             r = 255-r
@@ -85,12 +91,13 @@ def generateFractal():
 width = 1280
 height = 720
 
-zoom = 1.0
+zoom = 1.0 # For now, use values like 1, 10, 100, 1000...
 
 offsetX = 0.0
 offsetY = 0.0
 
 invertColors = False
+whiteCenter = True
 
 rColor = random.random()
 gColor = random.random()
