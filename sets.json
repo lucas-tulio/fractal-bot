@@ -1,0 +1,38 @@
+{
+  "sets": [
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0
+    },
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "cr": -0.79,
+      "ci": 0.15
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "cr": -0.79,
+      "ci": 0.15
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "cr": -0.79,
+      "ci": 0.15
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "cr": -0.79,
+      "ci": 0.15
+    }
+  ]
+}
