@@ -1,7 +1,7 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-from random import random, randint, getrandbits
-import sys, math, time
+from random import random, randint, getrandbits, choice
+import sys, math, time, json
 
 def getMandelbrotSmooth(mod, z, smoothDiv): # Mandelbrot smooth color value
   
@@ -13,7 +13,7 @@ def getMandelbrotSmooth(mod, z, smoothDiv): # Mandelbrot smooth color value
     lg = 0
   return (z / smoothDiv) - lg / math.log(2)
 
-def generateFractal():
+def generateFractal(cr, ci):
 
   # Create the image
   im = Image.new("RGB", (width, height))
@@ -111,15 +111,26 @@ def generateFractal():
   # Save
   im.save(setType + ".png")
 
-# Setup
-setType = "mandelbrot"
+# Read Parameters
+f = open("sets.json")
+data = json.load(f)
+setDetails = choice(data["sets"])
 
+# Setup
+setType = setDetails["type"]
+print setType
 width = 1280
 height = 720
 
-zoom = 1.0 # For mandelbrot, use values like 1, 10, 100, 1000...
-offsetX = 0.0
-offsetY = 0.0
+# Offset
+if setType == "mandelbrot":
+  zoom = setDetails["zoom"]
+  offsetX = setDetails["offsetX"]
+  offsetY = setDetails["offsetY"]
+else:
+  zoom = 1.0
+  offsetX = 0.0
+  offsetY = 0.0
 
 # Offset fix
 if setType == "mandelbrot":
@@ -127,11 +138,14 @@ if setType == "mandelbrot":
 else:
   offsetXFix = 0.0
 
-# Parameters (relevant in julia only)
-cr = 0.285
-ci = 0.01
+if setType == "julia":
+  cr = setDetails["cr"]
+  ci = setDetails["ci"]
+else:
+  cr = 0.0
+  ci = 0.0
 
-invertColors = False
+invertColors = bool(getrandbits(1))
 if setType == "mandelbrot":
   whiteCenter = True if randint(1, 10) == 1 else False
 else:
@@ -140,11 +154,11 @@ else:
 rColor = random()
 gColor = random()
 bColor = random()
-rBright = randint(3, 10) # Min 1
-gBright = randint(3, 10) # Min 1
-bBright = randint(3, 10) # Min 1
+rBright = randint(1, 10) # Min 1
+gBright = randint(1, 10) # Min 1
+bBright = randint(1, 10) # Min 1
 
 start = time.time()
-generateFractal()
+generateFractal(cr, ci)
 print time.time() - start
 

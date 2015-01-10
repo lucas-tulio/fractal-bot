@@ -7,26 +7,6 @@
       "offsetX": 0.0,
       "offsetY": 0.0
     },
-    {
-      "type": "julia",
-      "maxIterations": 255,
-      "cr": -0.79,
-      "ci": 0.15
-    },
-
-    {
-      "type": "julia",
-      "maxIterations": 255,
-      "cr": -0.79,
-      "ci": 0.15
-    },
-
-    {
-      "type": "julia",
-      "maxIterations": 255,
-      "cr": -0.79,
-      "ci": 0.15
-    },
 
     {
       "type": "julia",
@@ -34,5 +14,6 @@
       "cr": -0.79,
       "ci": 0.15
     }
+
   ]
 }
