@@ -100,11 +100,11 @@ offsetY = 0.0
 invertColors = False
 whiteCenter = True
 
-rColor = random.random()
-gColor = random.random()
-bColor = random.random()
-rBright = randint(1, 10) # Min 1
-gBright = randint(1, 10) # Min 1
-bBright = randint(1, 10) # Min 1
+rColor = random()
+gColor = random()
+bColor = random()
+rBright = randint(3, 10) # Min 1
+gBright = randint(3, 10) # Min 1
+bBright = randint(3, 10) # Min 1
 
 generateFractal()
