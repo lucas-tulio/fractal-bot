@@ -1,6 +1,7 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-import sys, random, math
+from random import random, randint
+import sys, math
 
 def generateFractal():
 
@@ -33,7 +34,7 @@ def generateFractal():
         
         # Calculate the new real and imaginary parts
         newR = (oldR * oldR) - (oldI * oldI) + cr
-        newI = 2.0 * oldR * oldI + ci
+        newI = 2.0 * (oldR * oldI) + ci
 
         smooth += math.exp(-math.sqrt(newR*newR + newI*newI))
 
@@ -77,20 +78,19 @@ width = 1280
 height = 720
 
 zoom = 1.0
-
 xOffset = 0.0
 yOffset = 0.0
 
-cr = -0.79
-ci = 0.15
+cr = 0.285
+ci = 0.01
 
 invertColors = False
 
-rColor = random.random()
-gColor = random.random()
-bColor = random.random()
-rBright = 10 # Min 1
-gBright = 10 # Min 1
-bBright = 10 # Min 1
+rColor = random()
+gColor = random()
+bColor = random()
+rBright = randint(3, 10) # Min 1
+gBright = randint(3, 10) # Min 1
+bBright = randint(3, 10) # Min 1
 
 generateFractal()

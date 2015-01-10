@@ -1,6 +1,7 @@
 from __future__ import division
 from PIL import Image, ImageDraw
-import sys, math, random
+from random import random, randint
+import sys, math
 
 def generateFractal():
 
@@ -102,8 +103,8 @@ whiteCenter = True
 rColor = random.random()
 gColor = random.random()
 bColor = random.random()
-rBright = 10 # Min 1
-gBright = 10 # Min 1
-bBright = 10 # Min 1
+rBright = randint(1, 10) # Min 1
+gBright = randint(1, 10) # Min 1
+bBright = randint(1, 10) # Min 1
 
 generateFractal()
