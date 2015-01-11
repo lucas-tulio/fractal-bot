@@ -7,7 +7,6 @@ sentences = [
   "Fractal?",
   "Here's your fractal",
   "Here, have a fractal",
-  "Your fractal is right here",
   "I hope you like your fractal"
 ]
 
@@ -42,6 +41,7 @@ def sendFractal(latestId, tweet):
   tweetUser = tweet["user"]
   username = tweetUser["screen_name"]
   if username == "fractal_bot":
+    print "not sending one to myself"
     return
 
   # Check the already sent list
