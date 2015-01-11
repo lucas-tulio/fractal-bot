@@ -1,11 +1,134 @@
 {
   "sets": [
+    
     {
       "type": "mandelbrot",
       "maxIterations": 255,
       "zoom": 1.0,
       "offsetX": 0.0,
       "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 10.0,
+      "offsetX": -1.0,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 10.0,
+      "offsetX": -0.9,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 15.0,
+      "offsetX": -0.95,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 150.0,
+      "offsetX": -0.95,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 350.0,
+      "offsetX": -0.95,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 3500.0,
+      "offsetX": -0.95,
+      "offsetY": 0.0
+    },
+
+    {
+      "title": "The Ass",
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 10.0,
+      "offsetX": 0.8,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 50.0,
+      "offsetX": 0.767,
+      "offsetY": 0.0
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 15.0,
+      "offsetX": -0.258,
+      "offsetY": -0.1
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 50.0,
+      "offsetX": -0.258,
+      "offsetY": -0.1
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 90.0,
+      "offsetX": -0.2468,
+      "offsetY": -0.1
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 140.0,
+      "offsetX": -0.2468,
+      "offsetY": -0.1
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 200.0,
+      "offsetX": -0.2468,
+      "offsetY": -0.1018
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 400.0,
+      "offsetX": -0.246,
+      "offsetY": -0.101
+    },
+
+    {
+      "title": "The Seahorse Tail",
+      "type": "mandelbrot",
+      "maxIterations": 255,
+      "zoom": 600.0,
+      "offsetX": -0.245,
+      "offsetY": -0.121
     },
 
     {
