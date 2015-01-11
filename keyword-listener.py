@@ -5,11 +5,10 @@ from tweepy.streaming import StreamListener
 latestId = 0
 sentences = [
   "Fractal?",
-  "Did you just say \"fractal\"?",
   "Here's your fractal",
   "Here, have a fractal",
   "Your fractal is right here",
-  "I hope you like your fractal!"
+  "I hope you like your fractal"
 ]
 
 def sendFractal(latestId, tweet):
@@ -22,19 +21,13 @@ def sendFractal(latestId, tweet):
   if username == "fractal_bot":
     return
 
-  fractalType = ""
-  if bool(random.getrandbits(1)):
-    fractalType = "mandelbrot"
-  else:
-    fractalType = "julia"
-
-  os.system("python " + fractalType + ".py")
+  os.system("python generate.py")
 
   print "Sending tweet"
   latestId = tweet["id"]
   tweetUser = tweet["user"]
   sentence = random.choice(sentences)
-  api.update_with_media(fractalType + ".png", "@" + tweetUser["screen_name"] + " " + sentence, in_reply_to_status_id=latestId)
+  api.update_with_media("fractal.png", "@" + tweetUser["screen_name"] + " " + sentence, in_reply_to_status_id=latestId)
   print "done!"
 
 class listener(StreamListener):

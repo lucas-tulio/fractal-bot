@@ -108,7 +108,7 @@ def generateFractal(cr, ci):
       print str((y / height) * 100) + "%"
 
   # Save
-  im.save(setType + ".png")
+  im.save("fractal.png")
 
 # Read Parameters
 f = open("sets.json")
