@@ -51,6 +51,11 @@ def sendFractal(latestId, tweet):
   else:
     saveSend(username)
 
+  # Check if it's one of those stupid youtube automatic tweets
+  if "I added a video to a @YouTube playlist" in tweet["text"]:
+    print "youtube playlist tweet. Skipping"
+    return
+
   print "generating fractal to " + str(username)
   os.system("python generate.py")
 
