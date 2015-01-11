@@ -142,8 +142,92 @@
     {
       "type": "julia",
       "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
       "cr": -0.79,
       "ci": 0.15
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": -0.4,
+      "ci": 0.6
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": 0.285,
+      "ci": 0.0
+    },
+
+    {
+      "title": "Twin Flowers",
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": 0.285,
+      "ci": 0.01
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": 0.45,
+      "ci": 0.1428
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": -0.70176,
+      "ci": -0.3842
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": -0.835,
+      "ci": 0.2321
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 1.0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "cr": -0.8,
+      "ci": 0.156
+    },
+
+    {
+      "type": "julia",
+      "maxIterations": 255,
+      "zoom": 18000.0,
+      "offsetX": -0.24453,
+      "offsetY": -0.12122,
+      "cr": -0.4,
+      "ci": 0.6
     }
 
   ]
