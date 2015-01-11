@@ -3,3 +3,4 @@
 *.jpeg
 config.txt
 deploy.sh
+*.conf
