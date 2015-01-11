@@ -24,7 +24,6 @@ def generateFractal(cr, ci):
   newI = 0.0
   oldR = 0.0
   oldI = 0.0
-  maxIterations = 255
   smoothDiv = maxIterations / 255
 
   # Draw
@@ -118,23 +117,19 @@ setDetails = choice(data["sets"])
 
 # Setup
 setType = setDetails["type"]
+maxIterations = setDetails["maxIterations"]
 print setType
 width = 1280
 height = 720
 
 # Offset
-if setType == "mandelbrot":
-  zoom = setDetails["zoom"]
-  offsetX = setDetails["offsetX"]
-  offsetY = setDetails["offsetY"]
-else:
-  zoom = 1.0
-  offsetX = 0.0
-  offsetY = 0.0
+zoom = setDetails["zoom"]
+offsetX = setDetails["offsetX"]
+offsetY = setDetails["offsetY"]
 
 # Offset fix
 if setType == "mandelbrot":
-  offsetXFix = - 0.5
+  offsetXFix = -0.5
 else:
   offsetXFix = 0.0
 
@@ -154,9 +149,14 @@ else:
 rColor = random()
 gColor = random()
 bColor = random()
-rBright = randint(1, 10) # Min 1
-gBright = randint(1, 10) # Min 1
-bBright = randint(1, 10) # Min 1
+
+maxBrightness = 10
+if zoom > 8000:
+  maxBrightness = 3
+
+rBright = randint(1, maxBrightness) # Min 1
+gBright = randint(1, maxBrightness) # Min 1
+bBright = randint(1, maxBrightness) # Min 1
 
 start = time.time()
 generateFractal(cr, ci)
