@@ -15,8 +15,6 @@ def canSend(username): # Check if we already sent a fractal to this user today
   try:
     cur.execute("""SELECT * FROM logs WHERE adddate(created_at, INTERVAL 1 DAY) >= now() and username = %s""", username)
     result = cur.fetchone()
-    print "can send query result"
-    print result
     if result is None:
       return True
     else:
@@ -53,6 +51,7 @@ def sendFractal(latestId, tweet):
   else:
     saveSend(username)
 
+  print "generating fractal to " + str(username)
   os.system("python generate.py")
 
   print "Sending tweet"
