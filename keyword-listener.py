@@ -52,7 +52,7 @@ def sendFractal(latestId, tweet):
     saveSend(username)
 
   # Check if it's one of those stupid youtube automatic tweets
-  if "I added a video to a @YouTube playlist" in tweet["text"]:
+  if "@YouTube" in tweet["text"]:
     print "youtube playlist tweet. Skipping"
     return
 
