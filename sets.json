@@ -126,9 +126,17 @@
       "title": "The Seahorse Tail",
       "type": "mandelbrot",
       "maxIterations": 255,
-      "zoom": 600.0,
+      "zoom": 900.0,
       "offsetX": -0.245,
       "offsetY": -0.121
+    },
+
+    {
+      "type": "mandelbrot",
+      "maxIterations": 512,
+      "zoom": 18000.0,
+      "offsetX": -0.24453,
+      "offsetY": -0.12122
     },
 
     {
