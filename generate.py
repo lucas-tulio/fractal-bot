@@ -119,8 +119,8 @@ setDetails = choice(data["sets"])
 setType = setDetails["type"]
 maxIterations = setDetails["maxIterations"]
 print setType
-width = 1280
-height = 720
+width = 640
+height = 360
 
 # Offset
 zoom = setDetails["zoom"]
