@@ -56,6 +56,10 @@ def sendFractal(latestId, tweet):
     print "youtube playlist tweet. Skipping"
     return
 
+  if "analytics" in tweet["text"] or "Analytics" in tweet["text"]:
+    print "not tweeting to this analytics stuff"
+    return
+
   # Skip if it's a retweet
   print "has attr? " + str("retweeted_status" in tweet)
   if "retweeted_status" in tweet:
@@ -107,6 +111,6 @@ stream = tweepy.Stream(auth, listener())
 conn = pymysql.connect(host=db_host, port=int(db_port), user=db_user, passwd=db_password, db=db_schema, charset='utf8')
 cur = conn.cursor()
 
-# Start reading mention stream
-print "reading tweets containing 'fractal' or 'mandelbrot'..."
-stream.filter(track=["fractal", "mandelbrot"])
+# Start reading stream
+print "reading tweets containing 'fractal'"
+stream.filter(track=["fractal"])
