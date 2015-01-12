@@ -51,9 +51,15 @@ def sendFractal(latestId, tweet):
   else:
     saveSend(username)
 
-  # Check if it's one of those stupid youtube automatic tweets
+  # Skip if it's one of those stupid youtube automatic tweets
   if "@YouTube" in tweet["text"]:
     print "youtube playlist tweet. Skipping"
+    return
+
+  # Skip if it's a retweet
+  print "has attr? " + str("retweeted_status" in tweet)
+  if "retweeted_status" in tweet:
+    print "not sending to a retweet"
     return
 
   print "generating fractal to " + str(username)
