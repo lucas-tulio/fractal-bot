@@ -10,7 +10,8 @@ sentences = [
   "I hope you like your fractal"
 ]
 
-def canSend(username): # Check if we already sent a fractal to this user today
+# Check if we already sent a fractal to this user in the past x days
+def canSend(username):
   try:
     cur.execute("""SELECT * FROM logs WHERE adddate(created_at, INTERVAL 5 DAY) >= now() and username = %s""", username)
     result = cur.fetchone()
@@ -25,13 +26,30 @@ def canSend(username): # Check if we already sent a fractal to this user today
 
   return False
 
-def saveSend(username): # Save
+# Log
+def saveSend(username):
   try:
     cur.execute("""INSERT INTO logs (username) values (%s)""", (username))
     conn.commit()
   except Exception as e:
     print "Error running saveSend: " + str(username)
     print e
+
+# Check if the user is in the blacklist
+def userIsInBlacklist(username):
+  try:
+    cur.execute("""SELECT username FROM blacklist WHERE username = %s""", username)
+    result = cur.fetchone()
+    if result is None:
+      return False
+    else:
+      return True
+
+  except Exception as e:
+    print "Error running canSend: " + str(username)
+    print e
+
+  return False
 
 def sendFractal(latestId, tweet):
 
@@ -44,6 +62,17 @@ def sendFractal(latestId, tweet):
     print "not sending one to myself"
     return
 
+  # Skip if it's one of those stupid youtube automatic tweets
+  if "@YouTube" in tweet["text"] or "analytics" in tweet["text"] or "Analytics" in tweet["text"]:
+    print "Skipping tweet"
+    return
+
+  # Skip if it's a retweet
+  print "has attr? " + str("retweeted_status" in tweet)
+  if "retweeted_status" in tweet:
+    print "not sending to a retweet"
+    return
+
   # Check the already sent list
   if not canSend(username):
     print "already sent to this guy " + str(username)
@@ -51,19 +80,9 @@ def sendFractal(latestId, tweet):
   else:
     saveSend(username)
 
-  # Skip if it's one of those stupid youtube automatic tweets
-  if "@YouTube" in tweet["text"]:
-    print "youtube playlist tweet. Skipping"
-    return
-
-  if "analytics" in tweet["text"] or "Analytics" in tweet["text"]:
-    print "not tweeting to this analytics stuff"
-    return
-
-  # Skip if it's a retweet
-  print "has attr? " + str("retweeted_status" in tweet)
-  if "retweeted_status" in tweet:
-    print "not sending to a retweet"
+  # Check the blacklist
+  if userIsInBlacklist(username):
+    print "blacklist. Skipping user " + str(username)
     return
 
   print "generating fractal to " + str(username)
