@@ -64,14 +64,14 @@ def sendFractal(latestId, tweet):
 
   # Skip if it's one of those stupid youtube automatic tweets
   if "@YouTube" in tweet["text"] or "analytics" in tweet["text"] or "Analytics" in tweet["text"]:
-    print "Skipping tweet"
+    print "Skipping tweet to " + str(username)
     return
 
   # Skip if it's a retweet
-  print "has attr? " + str("retweeted_status" in tweet)
   if "retweeted_status" in tweet:
-    print "not sending to a retweet"
+    print "retweet, skipping"
     return
+  print "not a retweet"
 
   # Check the already sent list
   if not canSend(username):
@@ -80,11 +80,15 @@ def sendFractal(latestId, tweet):
   else:
     saveSend(username)
 
+  print "log to this user saved: " + str(username)
+
   # Check the blacklist
   if userIsInBlacklist(username):
     print "blacklist. Skipping user " + str(username)
     return
 
+  print "not in blacklist"
+  
   print "generating fractal to " + str(username)
   os.system("python generate.py")
 
