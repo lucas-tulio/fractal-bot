@@ -7,7 +7,8 @@ sentences = [
   "Fractal?",
   "Here's your fractal",
   "Here, have a fractal",
-  "I hope you like your fractal"
+  "I hope you like your fractal",
+  "How about these fractals?"
 ]
 
 # Check if we already sent a fractal to this user in the past x days
@@ -88,7 +89,7 @@ def sendFractal(latestId, tweet):
     return
 
   print "not in blacklist"
-  
+
   print "generating fractal to " + str(username)
   os.system("python generate.py")
 
