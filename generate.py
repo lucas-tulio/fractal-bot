@@ -140,6 +140,7 @@ else:
   cr = 0.0
   ci = 0.0
 
+# Colors
 invertColors = bool(getrandbits(1))
 if setType == "mandelbrot":
   whiteCenter = True if randint(1, 10) == 1 else False
@@ -150,6 +151,15 @@ rColor = random()
 gColor = random()
 bColor = random()
 
+if rColor + gColor + bColor < 0.5:
+  selected = randint(1, 3)
+  if selected == 1:
+    rColor = rColor + 0.5
+  elif selected ==  2:
+    gColor = gColor + 0.5
+  else:
+    bColor = bColor + 0.5
+
 maxBrightness = 10
 if zoom > 8000:
   maxBrightness = 3
@@ -158,6 +168,7 @@ rBright = randint(1, maxBrightness) # Min 1
 gBright = randint(1, maxBrightness) # Min 1
 bBright = randint(1, maxBrightness) # Min 1
 
+# Go!
 start = time.time()
 generateFractal(cr, ci)
 print time.time() - start
