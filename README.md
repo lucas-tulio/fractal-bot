@@ -15,7 +15,7 @@ Python script that draws random fractals. https://twitter.com/fractal_bot
 
 1. Install PyMySQL: `pip install PyMySQL`
 
-1. Create a file named `config.txt` and include your twitter auth data in the following format:
+1. Create a file named `config.txt` and include your twitter auth data in the format shown below. Remember to not commit this file into a public repository!
 
 ```
 consumer_key=
