@@ -8,7 +8,8 @@ sentences = [
   "Here's your fractal",
   "Here, have a fractal",
   "I hope you like your fractal",
-  "How about this fractal?"
+  "How about this fractal?",
+  "I made this fractal just for you"
 ]
 
 # Check if we already sent a fractal to this user in the past x days
