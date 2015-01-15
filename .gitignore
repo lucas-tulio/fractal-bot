@@ -1,7 +1,5 @@
 .DS_Store
 *.png
 *.jpeg
-config.txt
-imgur-config.txt
-deploy.sh
 *.conf
+deploy.sh
