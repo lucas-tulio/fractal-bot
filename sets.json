@@ -162,7 +162,7 @@
     {
       "type": "julia",
       "maxIterations": 255,
-      "zoom": 1.0,
+      "zoom": 0.8,
       "offsetX": 0.0,
       "offsetY": 0.0,
       "cr": 0.285,
@@ -173,7 +173,7 @@
       "title": "Twin Flowers",
       "type": "julia",
       "maxIterations": 255,
-      "zoom": 1.0,
+      "zoom": 0.8,
       "offsetX": 0.0,
       "offsetY": 0.0,
       "cr": 0.285,
