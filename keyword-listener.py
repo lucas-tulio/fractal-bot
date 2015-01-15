@@ -112,9 +112,10 @@ class listener(StreamListener):
     conn.close()
     sys.exit()
 
-# Read the twitter auth parameters. They should be in the order shown below and
-# follow the format: parameter=value
-f = open("config.txt", "r")
+# Read twitter and database parameters
+# They should be in the order shown below and follow the format:
+# parameter=value
+f = open("bot.conf", "r")
 consumer_key = f.readline().split("=")[1].rstrip("\n")
 consumer_secret = f.readline().split("=")[1].rstrip("\n")
 access_token = f.readline().split("=")[1].rstrip("\n")
