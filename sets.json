@@ -58,23 +58,6 @@
     },
 
     {
-      "title": "The Ass",
-      "type": "mandelbrot",
-      "maxIterations": 255,
-      "zoom": 10.0,
-      "offsetX": 0.8,
-      "offsetY": 0.0
-    },
-
-    {
-      "type": "mandelbrot",
-      "maxIterations": 255,
-      "zoom": 50.0,
-      "offsetX": 0.767,
-      "offsetY": 0.0
-    },
-
-    {
       "type": "mandelbrot",
       "maxIterations": 255,
       "zoom": 15.0,
