@@ -2,5 +2,6 @@
 *.png
 *.jpeg
 config.txt
+imgur-config.txt
 deploy.sh
 *.conf
