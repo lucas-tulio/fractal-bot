@@ -15,7 +15,7 @@ sentences = [
 # Check if we already sent a fractal to this user in the past x days
 def canSend(username):
   try:
-    cur.execute("""SELECT * FROM logs WHERE username = %s""", username)
+    cur.execute("""SELECT * FROM logs WHERE adddate(created_at, INTERVAL 1 DAY) >= now() and username = %""", username)
     result = cur.fetchone()
     if result is None:
       return True
