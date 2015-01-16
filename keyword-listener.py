@@ -64,6 +64,18 @@ def sendFractal(latestId, tweet):
     print "not sending one to myself"
     return
 
+  # Check if it's a mention
+  entities = tweet["entities"]
+  userMentions = entities["user_mentions"]
+  isMention = False
+  for mention in userMentions:
+    if mention["screen_name"] == "fractal_bot"
+    isMention = True
+    break
+
+  if not isMention:
+    return
+
   # Skip if it's one of those stupid youtube automatic tweets
   if "@YouTube" in tweet["text"] or "analytics" in tweet["text"] or "Analytics" in tweet["text"]:
     print "Skipping tweet to " + str(username)
@@ -138,5 +150,5 @@ conn = pymysql.connect(host=db_host, port=int(db_port), user=db_user, passwd=db_
 cur = conn.cursor()
 
 # Start reading stream
-print "reading tweets containing 'fractal'"
-stream.filter(track=["fractal"])
+print "reading mentions"
+stream.filter(track=["fractal_bot"])
