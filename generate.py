@@ -2,24 +2,7 @@ from __future__ import division
 from PIL import Image, ImageDraw
 from random import random, randint, getrandbits, choice
 from datetime import date
-import sys, math, time, json, pyimgur
-
-def sendFractalOfTheDay():
-
-  # Get imgur params
-  imgurFile = open("imgur.conf", "r")
-  clientId = imgurFile.readline().split("=")[1].rstrip("\n")
-  clientSecret = imgurFile.readline().split("=")[1].rstrip("\n")
-  imgurFile.close()
-
-  # Upload
-  imgur = pyimgur.Imgur(client_id=clientId, client_secret=clientSecret)
-  today = date.today()
-  image = imgur.upload_image(fractalFileName, title="Fractal of the day - " + str(today))
-  print(image.title)
-  print(image.link)
-  print(image.size)
-  print(image.type)
+import sys, math, time, json
 
 def getMandelbrotSmooth(mod, z, smoothDiv): # Mandelbrot smooth color value
   
@@ -127,10 +110,6 @@ def generateFractal(cr, ci):
 
   # Save
   im.save(fractalFileName)
-
-  # Send the Fractal of the Day, if that's the case
-  # if isFractalOfTheDay:
-  #   sendFractalOfTheDay()
 
 isFractalOfTheDay = False
 if len(sys.argv) == 2 and sys.argv[1] == "fotd":
