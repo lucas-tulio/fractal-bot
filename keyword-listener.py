@@ -69,16 +69,10 @@ def sendFractal(latestId, tweet):
   userMentions = entities["user_mentions"]
   isMention = False
   for mention in userMentions:
-    if mention["screen_name"] == "fractal_bot"
-    isMention = True
-    break
-
+    if mention["screen_name"] == "fractal_bot":
+      isMention = True
+      break
   if not isMention:
-    return
-
-  # Skip if it's one of those stupid youtube automatic tweets
-  if "@YouTube" in tweet["text"] or "analytics" in tweet["text"] or "Analytics" in tweet["text"]:
-    print "Skipping tweet to " + str(username)
     return
 
   # Skip if it's a retweet
