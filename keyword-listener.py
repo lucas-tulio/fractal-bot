@@ -15,7 +15,7 @@ sentences = [
 # Check if we already sent a fractal to this user in the past x days
 def canSend(username):
   try:
-    cur.execute("""SELECT * FROM logs WHERE adddate(created_at, INTERVAL 1 DAY) >= now() and username = %""", username)
+    cur.execute("""SELECT * FROM logs WHERE username = %s AND adddate(created_at, INTERVAL 1 DAY) >= now() """, username)
     result = cur.fetchone()
     if result is None:
       return True
@@ -71,8 +71,10 @@ def sendFractal(latestId, tweet):
   for mention in userMentions:
     if mention["screen_name"] == "fractal_bot":
       isMention = True
+      print "mention!"
       break
   if not isMention:
+    print "not a mention"
     return
 
   # Skip if it's a retweet
