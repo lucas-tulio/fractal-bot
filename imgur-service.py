@@ -18,4 +18,26 @@ def sendFractalOfTheDay():
   print(image.type)
 
   # Tweet
+  f = open("bot.conf", "r")
+  consumer_key = f.readline().split("=")[1].rstrip("\n")
+  consumer_secret = f.readline().split("=")[1].rstrip("\n")
+  access_token = f.readline().split("=")[1].rstrip("\n")
+  access_token_secret = f.readline().split("=")[1].rstrip("\n")
+  db_host = f.readline().split("=")[1].rstrip("\n")
+  db_port = f.readline().split("=")[1].rstrip("\n")
+  db_user = f.readline().split("=")[1].rstrip("\n")
+  db_password = f.readline().split("=")[1].rstrip("\n")
+  db_schema = f.readline().split("=")[1].rstrip("\n")
+  f.close()
+
+  # Authenticate
+  auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+  auth.set_access_token(access_token, access_token_secret)
+  api = tweepy.API(auth)
+  stream = tweepy.Stream(auth, listener())
+
+  # Start database
+  conn = pymysql.connect(host=db_host, port=int(db_port), user=db_user, passwd=db_password, db=db_schema, charset='utf8')
+  cur = conn.cursor()
+
   
