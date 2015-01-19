@@ -7,4 +7,4 @@ Python script that draws random fractals. https://twitter.com/fractal_bot
 
 1. Install Pillow: `pip install Pillow`
 
-1. Run `python generate.py` and have fun!
+1. Run `python fractal.py` and have fun!
