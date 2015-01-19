@@ -1,4 +1,5 @@
-import pyimgur
+from datetime import date
+import pyimgur, tweepy, sys
 
 # Get imgur params
 imgurFile = open("imgur.conf", "r")
@@ -14,6 +15,11 @@ print(image.title)
 print(image.link)
 print(image.size)
 print(image.type)
+print "deletion link: imgur.com/delete/" + str(image._delete_or_id_hash)
+
+if image.link == "":
+  print "no link"
+  sys.exit(0)
 
 # Twitter settings
 f = open("bot.conf", "r")
