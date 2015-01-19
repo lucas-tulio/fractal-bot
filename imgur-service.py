@@ -1,5 +1,13 @@
 from datetime import date
-import pyimgur, tweepy, sys
+import pyimgur, tweepy, sys, pymysql
+
+def logFractalOfTheDay(link, deleteHash, size):
+  try:
+    cur.execute("""INSERT INTO fotd (link, deletehash, size) values (%s, %s, %s)""", (link, deleteHash, int(size)))
+    conn.commit()
+  except Exception as e:
+    print "Error logging fractal of the day: " + str(username)
+    print e
 
 # Get imgur params
 imgurFile = open("imgur.conf", "r")
@@ -38,12 +46,12 @@ f.close()
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
-stream = tweepy.Stream(auth, listener())
 
 # Start database
 conn = pymysql.connect(host=db_host, port=int(db_port), user=db_user, passwd=db_password, db=db_schema, charset='utf8')
 cur = conn.cursor()
+logFractalOfTheDay(image.link, image._delete_or_id_hash, image.size)
 
 # Tweet
-api.update("Fractal of the day " + str(image.link))
+api.update_with_media("fotd.png", "Fractal of the day " + str(image.link) + " #fractal")
 print "done"
