@@ -88,8 +88,8 @@ class Fractal:
       height = 1080
     else:
       fractal_file_name = "fractal.png"
-      width = 640
-      height = 360
+      width = 960
+      height = 540
 
     self._define_parameters()
 
