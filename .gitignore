@@ -4,3 +4,4 @@
 *.conf
 deploy.sh
 *.pyc
+*.sh
