@@ -4,186 +4,188 @@ from random import random, randint, getrandbits, choice
 from datetime import date
 import sys, math, time, json
 
-def getMandelbrotSmooth(mod, z, smoothDiv): # Mandelbrot smooth color value
-  
-  mod = math.sqrt(mod)
-  lg = 0
-  try:
-    lg = math.log(math.log(mod))
-  except:
-    lg = 0
-  return (z / smoothDiv) - lg / math.log(2)
+class Fractal:
 
-def generateFractal(cr, ci):
+  def __init__(self):
+    pass
 
-  # Create the image
-  im = Image.new("RGB", (width, height))
-  draw = ImageDraw.Draw(im)
+  def _defineParameters(self):
+    
+    # Get fractal parameters
+    f = open("sets.json")
+    data = json.load(f)
+    setDetails = choice(data["sets"])
 
-  # Set control
-  newR = 0.0
-  newI = 0.0
-  oldR = 0.0
-  oldI = 0.0
-  smoothDiv = maxIterations / 255
+    # Type
+    self.setType = setDetails["type"]
+    self.maxIterations = setDetails["maxIterations"]
+    print self.setType
 
-  # Draw
-  for y in range(0, height):
-    for x in range(0, width):
+    # Offset
+    self.zoom = setDetails["zoom"]
+    self.offsetX = setDetails["offsetX"]
+    self.offsetY = setDetails["offsetY"]
 
-      newR = (width / height) * (x - width / 2.0) / (0.5 * zoom * width) + offsetX + offsetXFix
-      newI = (y - height / 2.0) / (0.5 * zoom * height) + offsetY
+    # Offset fix
+    if self.setType == "mandelbrot":
+      self.offsetXFix = -0.5
+    else:
+      self.offsetXFix = 0.0
 
-      if setType == "julia":
-        smooth = math.exp(-math.sqrt(newR*newR + newI*newI))
+    if self.setType == "julia":
+      self.cr = setDetails["cr"]
+      self.ci = setDetails["ci"]
+    else:
+      self.cr = 0.0
+      self.ci = 0.0
+
+    # Colors
+    self.invertColors = bool(getrandbits(1))
+    if self.setType == "mandelbrot":
+      self.whiteCenter = True if randint(1, 10) == 1 else False
+    else:
+      self.whiteCenter = False
+
+    self.rColor = random()
+    self.gColor = random()
+    self.bColor = random()
+
+    # Fix color to avoid full black or full white images
+    if self.rColor + self.gColor + self.bColor < 0.5:
+      selected = randint(1, 3)
+      if selected == 1:
+        self.rColor = self.rColor + 0.5
+      elif selected ==  2:
+        self.gColor = self.gColor + 0.5
       else:
-        real = newR
-        imaginary = newI
-        newR = 0.0
-        newI = 0.0
-        oldR = 0.0
-        oldI = 0.0
+        self.bColor = self.bColor + 0.5
 
-      # Start iterating
-      for z in range(0, maxIterations):
+    # Brightness
+    self.maxBrightness = 10
+    if self.zoom > 8000:
+      self.maxBrightness = 3
 
-        # Get the values of the previous iteration
-        oldR = newR
-        oldI = newI
+    self.rBright = randint(1, self.maxBrightness) # Min 1
+    self.gBright = randint(1, self.maxBrightness) # Min 1
+    self.bBright = randint(1, self.maxBrightness) # Min 1
 
-        # Calculate the new real and imaginary parts
-        if setType == "mandelbrot":
-          cr = real
-          ci = imaginary
-        newR = (oldR * oldR) - (oldI * oldI) + cr
-        newI = 2.0 * (oldR * oldI) + ci
+  def _getMandelbrotSmooth(self, mod, z, smoothDiv): # Mandelbrot smooth color value
+    
+    mod = math.sqrt(mod)
+    lg = 0
+    try:
+      lg = math.log(math.log(mod))
+    except:
+      lg = 0
+    return (z / smoothDiv) - lg / math.log(2)
 
-        if setType == "julia":
-          smooth += math.exp(-math.sqrt(newR*newR + newI*newI))
+  def generate(self, fotd=False):
 
-        # Exit condition
-        mod = newR * newR + newI * newI
-        if mod > 4.0:
-          
-          if setType == "mandelbrot":
-            smooth = getMandelbrotSmooth(mod, z, smoothDiv)
-          
-          # Smooth has a value ranging from 0 to 255
-          if setType == "mandelbrot":
-            r = int(smooth * rColor * rBright * smoothDiv)
-            g = int(smooth * gColor * gBright * smoothDiv)
-            b = int(smooth * bColor * bBright * smoothDiv)
-          else:
-            r = int(smooth / smoothDiv * rColor * rBright)
-            g = int(smooth / smoothDiv * gColor * gBright)
-            b = int(smooth / smoothDiv * bColor * bBright)
+    # Fractal of the day?
+    if fotd:
+      print "Fractal of the Day!"
+      fractalFileName = "fotd.png"
+      width = 1920
+      height = 1080
+    else:
+      fractalFileName = "fractal.png"
+      width = 640
+      height = 360
 
-          if invertColors:
-            r = 255-r
-            g = 255-g
-            b = 255-b
+    self._defineParameters()
 
-          draw.point([(x, y)], fill=(r, g, b))
-          break
+    # Create the image
+    im = Image.new("RGB", (width, height))
+    draw = ImageDraw.Draw(im)
 
-        elif z == maxIterations - 1: # End of loop, draw inside the forms
-          
-          if (whiteCenter):
-            r = int(255)
-            g = int(255)
-            b = int(255)
-          else:
-            r = int(255 * rColor * rBright)
-            g = int(255 * gColor * gBright)
-            b = int(255 * bColor * bBright)
+    # Set control
+    newR = 0.0
+    newI = 0.0
+    oldR = 0.0
+    oldI = 0.0
+    smoothDiv = self.maxIterations / 255
 
-          if invertColors:
-            r = 255-r
-            g = 255-g
-            b = 255-b
-          
-          draw.point([(x, y)], fill=(r, g, b))
+    # Draw
+    for y in range(0, height):
+      for x in range(0, width):
 
-    # Print progress
-    if y % 10 == 0:
-      print str((y / height) * 100) + "%"
+        newR = (width / height) * (x - width / 2.0) / (0.5 * self.zoom * width) + self.offsetX + self.offsetXFix
+        newI = (y - height / 2.0) / (0.5 * self.zoom * height) + self.offsetY
 
-  # Save
-  im.save(fractalFileName)
+        if self.setType == "julia":
+          smooth = math.exp(-math.sqrt(newR*newR + newI*newI))
+        else:
+          real = newR
+          imaginary = newI
+          newR = 0.0
+          newI = 0.0
+          oldR = 0.0
+          oldI = 0.0
 
-isFractalOfTheDay = False
-if len(sys.argv) == 2 and sys.argv[1] == "fotd":
-  print "fractal of the day!"
-  isFractalOfTheDay = True
+        # Start iterating
+        for z in range(0, self.maxIterations):
 
-# Read Parameters
-fractalFileName = "fractal.png"
-width = 640
-height = 360
+          # Get the values of the previous iteration
+          oldR = newR
+          oldI = newI
 
-if isFractalOfTheDay:
-  fractalFileName = "fotd.png"
-  width = 1920
-  height = 1080
+          # Calculate the new real and imaginary parts
+          if self.setType == "mandelbrot":
+            self.cr = real
+            self.ci = imaginary
+          newR = (oldR * oldR) - (oldI * oldI) + self.cr
+          newI = 2.0 * (oldR * oldI) + self.ci
 
-# Get fractal parameters
-f = open("sets.json")
-data = json.load(f)
-# setDetails = choice(data["sets"])
-setDetails = data["sets"][8]
+          if self.setType == "julia":
+            smooth += math.exp(-math.sqrt(newR*newR + newI*newI))
 
-# Type
-setType = setDetails["type"]
-maxIterations = setDetails["maxIterations"]
-print setType
+          # Exit condition
+          mod = newR * newR + newI * newI
+          if mod > 4.0:
+            
+            if self.setType == "mandelbrot":
+              smooth = self._getMandelbrotSmooth(mod, z, smoothDiv)
+            
+            # Smooth has a value ranging from 0 to 255
+            if self.setType == "mandelbrot":
+              r = int(smooth * self.rColor * self.rBright * smoothDiv)
+              g = int(smooth * self.gColor * self.gBright * smoothDiv)
+              b = int(smooth * self.bColor * self.bBright * smoothDiv)
+            else:
+              r = int(smooth / smoothDiv * self.rColor * self.rBright)
+              g = int(smooth / smoothDiv * self.gColor * self.gBright)
+              b = int(smooth / smoothDiv * self.bColor * self.bBright)
 
-# Offset
-zoom = setDetails["zoom"]
-offsetX = setDetails["offsetX"]
-offsetY = setDetails["offsetY"]
+            if self.invertColors:
+              r = 255-r
+              g = 255-g
+              b = 255-b
 
-# Offset fix
-if setType == "mandelbrot":
-  offsetXFix = -0.5
-else:
-  offsetXFix = 0.0
+            draw.point([(x, y)], fill=(r, g, b))
+            break
 
-if setType == "julia":
-  cr = setDetails["cr"]
-  ci = setDetails["ci"]
-else:
-  cr = 0.0
-  ci = 0.0
+          elif z == self.maxIterations - 1: # End of loop, draw inside the forms
+            
+            if (self.whiteCenter):
+              r = int(255)
+              g = int(255)
+              b = int(255)
+            else:
+              r = int(255 * self.rColor * self.rBright)
+              g = int(255 * self.gColor * self.gBright)
+              b = int(255 * self.bColor * self.bBright)
 
-# Colors
-invertColors = bool(getrandbits(1))
-if setType == "mandelbrot":
-  whiteCenter = True if randint(1, 10) == 1 else False
-else:
-  whiteCenter = False
+            if self.invertColors:
+              r = 255-r
+              g = 255-g
+              b = 255-b
+            
+            draw.point([(x, y)], fill=(r, g, b))
 
-rColor = random()
-gColor = random()
-bColor = random()
+      # Print progress
+      if y % 10 == 0:
+        print str((y / height) * 100) + "%"
 
-# Fix color to avoid full black or full white images
-if rColor + gColor + bColor < 0.5:
-  selected = randint(1, 3)
-  if selected == 1:
-    rColor = rColor + 0.5
-  elif selected ==  2:
-    gColor = gColor + 0.5
-  else:
-    bColor = bColor + 0.5
-
-# Brightness
-maxBrightness = 10
-if zoom > 8000:
-  maxBrightness = 3
-
-rBright = randint(1, maxBrightness) # Min 1
-gBright = randint(1, maxBrightness) # Min 1
-bBright = randint(1, maxBrightness) # Min 1
-
-# Go!
-generateFractal(cr, ci)
+    # Save
+    im.save(fractalFileName)
+    print "Done. File " + str(fractalFileName) + " saved"
