@@ -21,7 +21,7 @@ def send_fractal(tweet):
   # Don't do anything if it's our own tweet
   tweet_id = tweet["id"]
   tweet_user = tweet["user"]
-  username = tweetUser["screen_name"]
+  username = tweet_user["screen_name"]
   if username == "fractal_bot":
     print "not sending one to myself"
     return
