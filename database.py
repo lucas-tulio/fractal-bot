@@ -26,7 +26,7 @@ class Database:
   #
   def log_fotd(self, link, delete_hash, size):
     try:
-      self.cur.execute("""INSERT INTO fotd (link, deletehash, size) values (%s, %s, %s)""", (link, delete_hash, int(size)))
+      self.cur.execute("""INSERT INTO fotd (link, deletehash, size) VALUES (%s, %s, %s)""", (link, delete_hash, int(size)))
       self.conn.commit()
     except Exception as e:
       print "Error logging fractal of the day"
@@ -35,7 +35,7 @@ class Database:
   #
   # Check if we already sent a fractal to this user in the past x days
   #
-  def can_send(username):
+  def can_send(self, username):
     try:
       self.cur.execute("""SELECT * FROM logs WHERE username = %s AND adddate(created_at, INTERVAL 1 DAY) >= now() """, username)
       result = self.cur.fetchone()
@@ -53,18 +53,18 @@ class Database:
   #
   # Log a reply
   #
-  def save_send(username):
+  def save_send(self, username):
     try:
-      self.cur.execute("""INSERT INTO logs (username) values (%s)""", (username))
+      self.cur.execute("""INSERT INTO logs (username) VALUES (%s)""", (username))
       self.conn.commit()
     except Exception as e:
       print "Error running save_send for " + str(username)
-    print e
+      print e
 
   #
   # Check if the user is in the blacklist
   #
-  def is_user_in_blacklist(username):
+  def is_user_in_blacklist(self, username):
     try:
       self.cur.execute("""SELECT username FROM blacklist WHERE username = %s""", username)
       result = self.cur.fetchone()
