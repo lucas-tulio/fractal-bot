@@ -1,8 +1,10 @@
 import tweepy, time, os, sys, json, random, pymysql
 from tweepy import Stream
 from tweepy.streaming import StreamListener
+from database import Database
+from twitter import Twitter
+from fractal import Fractal
 
-latestId = 0
 sentences = [
   "Fractal?",
   "Here's your fractal",
@@ -12,48 +14,7 @@ sentences = [
   "I made this fractal just for you"
 ]
 
-# Check if we already sent a fractal to this user in the past x days
-def canSend(username):
-  try:
-    cur.execute("""SELECT * FROM logs WHERE username = %s AND adddate(created_at, INTERVAL 1 DAY) >= now() """, username)
-    result = cur.fetchone()
-    if result is None:
-      return True
-    else:
-      return False
-
-  except Exception as e:
-    print "Error running canSend: " + str(username)
-    print e
-
-  return False
-
-# Log
-def saveSend(username):
-  try:
-    cur.execute("""INSERT INTO logs (username) values (%s)""", (username))
-    conn.commit()
-  except Exception as e:
-    print "Error running saveSend: " + str(username)
-    print e
-
-# Check if the user is in the blacklist
-def userIsInBlacklist(username):
-  try:
-    cur.execute("""SELECT username FROM blacklist WHERE username = %s""", username)
-    result = cur.fetchone()
-    if result is None:
-      return False
-    else:
-      return True
-
-  except Exception as e:
-    print "Error running canSend: " + str(username)
-    print e
-
-  return False
-
-def sendFractal(latestId, tweet):
+def sendFractal(tweet):
 
   print "got one"
 
@@ -84,35 +45,35 @@ def sendFractal(latestId, tweet):
   print "not a retweet"
 
   # Check the already sent list
-  if not canSend(username):
+  if not db.canSend(username):
     print "already sent to this guy " + str(username)
     return
   else:
-    saveSend(username)
+    db.saveSend(username)
 
   print "log to this user saved: " + str(username)
 
   # Check the blacklist
-  if userIsInBlacklist(username):
+  if db.userIsInBlacklist(username):
     print "blacklist. Skipping user " + str(username)
     return
 
   print "not in blacklist"
 
   print "generating fractal to " + str(username)
-  os.system("python generate.py")
+  fractal.generate()
 
   print "Sending tweet"
-  latestId = tweet["id"]
+  tweetId = tweet["id"]
   tweetUser = tweet["user"]
   sentence = random.choice(sentences)
-  api.update_with_media("fractal.png", "@" + tweetUser["screen_name"] + " " + sentence, in_reply_to_status_id=latestId)
+  twitter.api.update_with_media("fractal.png", "@" + tweetUser["screen_name"] + " " + sentence, in_reply_to_status_id=tweetId)
   print "done!"
 
-class listener(StreamListener):
+class Listener(StreamListener):
   def on_data(self, data):
     jsonData = json.loads(data)
-    sendFractal(latestId, jsonData)
+    sendFractal(jsonData)
     return True
   def on_error(self, status):
     print "Error!"
@@ -120,30 +81,15 @@ class listener(StreamListener):
     conn.close()
     sys.exit()
 
-# Read twitter and database parameters
-# They should be in the order shown below and follow the format:
-# parameter=value
-f = open("bot.conf", "r")
-consumer_key = f.readline().split("=")[1].rstrip("\n")
-consumer_secret = f.readline().split("=")[1].rstrip("\n")
-access_token = f.readline().split("=")[1].rstrip("\n")
-access_token_secret = f.readline().split("=")[1].rstrip("\n")
-db_host = f.readline().split("=")[1].rstrip("\n")
-db_port = f.readline().split("=")[1].rstrip("\n")
-db_user = f.readline().split("=")[1].rstrip("\n")
-db_password = f.readline().split("=")[1].rstrip("\n")
-db_schema = f.readline().split("=")[1].rstrip("\n")
-f.close()
+# Start Fractal generator
+fractal = Fractal()
 
-# Authenticate
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
-stream = tweepy.Stream(auth, listener())
+# Start Twitter
+twitter = Twitter()
+stream = Stream(twitter.auth, Listener())
 
 # Start database
-conn = pymysql.connect(host=db_host, port=int(db_port), user=db_user, passwd=db_password, db=db_schema, charset='utf8')
-cur = conn.cursor()
+db = Database()
 
 # Start reading stream
 print "reading mentions"

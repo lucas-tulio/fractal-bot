@@ -13,6 +13,6 @@ class Twitter:
     f.close()
 
     # Start the api
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    self.api = tweepy.API(auth)
+    self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    self.auth.set_access_token(access_token, access_token_secret)
+    self.api = tweepy.API(self.auth)
