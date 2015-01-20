@@ -32,6 +32,7 @@ def send_fractal(tweet):
   is_mention = False
   for mention in user_mentions:
     if mention["screen_name"] == "fractal_bot":
+      print "mentions " + str(mention["screen_name"])
       is_mention = True
       print "mention!"
       break
