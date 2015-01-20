@@ -18,7 +18,7 @@ class Database:
     self.cur = self.conn.cursor()
 
   # Logs the Fractal of the Day
-  def logFractalOfTheDay(self, link, deleteHash, size):
+  def logFotd(self, link, deleteHash, size):
     try:
       self.cur.execute("""INSERT INTO fotd (link, deletehash, size) values (%s, %s, %s)""", (link, deleteHash, int(size)))
       self.conn.commit()
