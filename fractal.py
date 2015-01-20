@@ -1,8 +1,7 @@
 from __future__ import division
 from PIL import Image, ImageDraw
 from random import random, randint, getrandbits, choice
-from datetime import date
-import sys, math, time, json
+import math, json
 
 class Fractal:
 
@@ -187,5 +186,5 @@ class Fractal:
         print str((y / height) * 100) + "%"
 
     # Save
-    im.save(fractal_file_mame)
-    print "Done. File " + str(fractal_file_mame) + " saved"
+    im.save(fractal_file_name)
+    print "Done. File " + str(fractal_file_name) + " saved"
