@@ -14,12 +14,13 @@ sentences = [
   "I made this fractal just for you"
 ]
 
-def sendFractal(tweet):
+def send_fractal(tweet):
 
   print "got one"
 
   # Don't do anything if it's our own tweet
-  tweetUser = tweet["user"]
+  tweet_id = tweet["id"]
+  tweet_user = tweet["user"]
   username = tweetUser["screen_name"]
   if username == "fractal_bot":
     print "not sending one to myself"
@@ -27,14 +28,14 @@ def sendFractal(tweet):
 
   # Check if it's a mention
   entities = tweet["entities"]
-  userMentions = entities["user_mentions"]
-  isMention = False
-  for mention in userMentions:
+  user_mentions = entities["user_mentions"]
+  is_mention = False
+  for mention in user_mentions:
     if mention["screen_name"] == "fractal_bot":
-      isMention = True
+      is_mention = True
       print "mention!"
       break
-  if not isMention:
+  if not is_mention:
     print "not a mention"
     return
 
@@ -45,16 +46,16 @@ def sendFractal(tweet):
   print "not a retweet"
 
   # Check the already sent list
-  if not db.canSend(username):
+  if not db.can_send(username):
     print "already sent to this guy " + str(username)
     return
   else:
-    db.saveSend(username)
+    db.save_send(username)
 
   print "log to this user saved: " + str(username)
 
   # Check the blacklist
-  if db.userIsInBlacklist(username):
+  if db.is_user_in_blacklist(username):
     print "blacklist. Skipping user " + str(username)
     return
 
@@ -64,16 +65,14 @@ def sendFractal(tweet):
   fractal.generate()
 
   print "Sending tweet"
-  tweetId = tweet["id"]
-  tweetUser = tweet["user"]
   sentence = random.choice(sentences)
-  twitter.api.update_with_media("fractal.png", "@" + tweetUser["screen_name"] + " " + sentence, in_reply_to_status_id=tweetId)
+  twitter.api.update_with_media("fractal.png", "@" + username + " " + sentence, in_reply_to_status_id=tweet_id)
   print "done!"
 
 class Listener(StreamListener):
   def on_data(self, data):
-    jsonData = json.loads(data)
-    sendFractal(jsonData)
+    json_data = json.loads(data)
+    send_fractal(json_data)
     return True
   def on_error(self, status):
     print "Error!"

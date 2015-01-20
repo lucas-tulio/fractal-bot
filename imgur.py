@@ -7,9 +7,9 @@ class Imgur:
 
     # Get imgur params
     f = open("./conf/imgur.conf", "r")
-    clientId = f.readline().split("=")[1].rstrip("\n")
-    clientSecret = f.readline().split("=")[1].rstrip("\n")
+    client_id = f.readline().split("=")[1].rstrip("\n")
+    client_secret = f.readline().split("=")[1].rstrip("\n")
     f.close()
 
     # Start the imgur api
-    self.api = pyimgur.Imgur(client_id=clientId, client_secret=clientSecret)
+    self.api = pyimgur.Imgur(client_id=client_id, client_secret=client_secret)

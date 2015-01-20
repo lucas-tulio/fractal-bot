@@ -24,7 +24,7 @@ if image.link == "":
 
 # Log the Fractal of the Day
 db = Database()
-db.logFotd(image.link, image._delete_or_id_hash, image.size)
+db.log_fotd(image.link, image._delete_or_id_hash, image.size)
 
 # Tweet
 twitter = Twitter()

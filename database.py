@@ -24,18 +24,18 @@ class Database:
   #
   # Logs the Fractal of the Day
   #
-  def logFotd(self, link, deleteHash, size):
+  def log_fotd(self, link, delete_hash, size):
     try:
-      self.cur.execute("""INSERT INTO fotd (link, deletehash, size) values (%s, %s, %s)""", (link, deleteHash, int(size)))
+      self.cur.execute("""INSERT INTO fotd (link, deletehash, size) values (%s, %s, %s)""", (link, delete_hash, int(size)))
       self.conn.commit()
     except Exception as e:
-      print "Error logging fractal of the day: " + str(username)
+      print "Error logging fractal of the day"
       print e
 
   #
   # Check if we already sent a fractal to this user in the past x days
   #
-  def canSend(username):
+  def can_send(username):
     try:
       self.cur.execute("""SELECT * FROM logs WHERE username = %s AND adddate(created_at, INTERVAL 1 DAY) >= now() """, username)
       result = self.cur.fetchone()
@@ -45,7 +45,7 @@ class Database:
         return False
 
     except Exception as e:
-      print "Error running canSend: " + str(username)
+      print "Error running can_send for " + str(username)
       print e
 
     return False
@@ -53,18 +53,18 @@ class Database:
   #
   # Log a reply
   #
-  def saveSend(username):
+  def save_send(username):
     try:
       self.cur.execute("""INSERT INTO logs (username) values (%s)""", (username))
       self.conn.commit()
     except Exception as e:
-      print "Error running saveSend: " + str(username)
+      print "Error running save_send for " + str(username)
     print e
 
   #
   # Check if the user is in the blacklist
   #
-  def userIsInBlacklist(username):
+  def is_user_in_blacklist(username):
     try:
       self.cur.execute("""SELECT username FROM blacklist WHERE username = %s""", username)
       result = self.cur.fetchone()
@@ -74,7 +74,7 @@ class Database:
         return True
 
     except Exception as e:
-      print "Error running canSend: " + str(username)
+      print "Error running blacklist check for " + str(username)
       print e
 
     return False
