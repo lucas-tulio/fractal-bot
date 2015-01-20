@@ -3,11 +3,11 @@ from datetime import date
 from imgur import Imgur
 from database import Database
 from twitter import Twitter
-# from fractal import Fractal
+from fractal import Fractal
 
 # Generate the Fractal of the Day
-# fractal = Fractal()
-# fractal.fotd()
+fract = Fractal()
+fract.generate(fotd=True)
 
 # Upload
 im = Imgur()
@@ -22,11 +22,11 @@ if image.link == "":
   print "no link"
   sys.exit(0)
 
-# # Log the Fractal of the Day
-# db = Database()
-# db.logFractalOfTheDay(image.link, image._delete_or_id_hash, image.size)
+# Log the Fractal of the Day
+db = Database()
+db.logFotd(image.link, image._delete_or_id_hash, image.size)
 
-# # Tweet
-# twitter = Twitter()
-# twitter.api.update_with_media("fotd.png", "Fractal of the day " + str(image.link) + " #fractal")
-# print "done"
+# Tweet
+twitter = Twitter()
+twitter.api.update_with_media("fotd.png", "Fractal of the day " + str(image.link) + " #fractal")
+print "done"
