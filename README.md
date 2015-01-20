@@ -3,8 +3,15 @@ fractal-bot
 
 Python script that draws random fractals. https://twitter.com/fractal_bot
 
-#### Fractal generator setup
+#### Fractal Generator
 
 1. Install Pillow: `pip install Pillow`
 
-1. Run `python fractal.py` and have fun!
+1. Generate a fractal:
+
+```
+$ python
+>>> from fractal import Fractal
+>>> f = Fractal()
+>>> f.generate()
+```
