@@ -43,7 +43,7 @@ class Database:
   def can_send(self, username):
     self._connect()
     try:
-      self.cur.execute("""SELECT * FROM logs WHERE username = %s AND adddate(created_at, INTERVAL 1 DAY) >= now() """, username)
+      self.cur.execute("""SELECT * FROM logs WHERE username = %s AND adddate(created_at, INTERVAL 7 DAY) >= now() """, username)
       result = self.cur.fetchone()
       if result is None:
         return True
