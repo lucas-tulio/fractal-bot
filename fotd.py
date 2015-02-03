@@ -11,7 +11,7 @@ fract.generate(fotd=True)
 
 # Upload
 im = Imgur()
-image = im.api.upload_image("fotd.png", title="Fractal of the day - " + str(date.today()))
+image = im.api.upload_image("fotd.png", title="Fractal of the day (1080p) - " + str(date.today()))
 print(image.title)
 print(image.link)
 print(image.size)
