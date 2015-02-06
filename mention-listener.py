@@ -4,6 +4,7 @@ from tweepy.streaming import StreamListener
 from database import Database
 from twitter import Twitter
 from fractal import Fractal
+from datetime import datetime
 
 sentences = [
   "Fractal?",
@@ -16,7 +17,7 @@ sentences = [
 
 def send_fractal(tweet):
 
-  print "got one"
+  print str(datetime.now()) + ": got one"
 
   # Don't do anything if it's our own tweet
   tweet_id = tweet["id"]
@@ -77,8 +78,8 @@ class Listener(StreamListener):
     return True
   def on_error(self, status):
     print "Error!"
-    cur.close()
-    conn.close()
+    print status
+    db._disconnect()
     sys.exit()
 
 # Start Fractal generator
