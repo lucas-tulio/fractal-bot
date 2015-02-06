@@ -4,6 +4,9 @@ class Database:
 
   def __init__(self):
 
+    self.cur = None
+    self.conn = None
+
     # Read parameters
     f = open("./conf/db.conf", "r")
     self.db_host = f.readline().split("=")[1].rstrip("\n")
@@ -21,8 +24,10 @@ class Database:
     self.cur = self.conn.cursor()
 
   def _disconnect(self):
-    self.cur.close()
-    self.conn.close()
+    if self.cur != None:
+      self.cur.close()
+    if self.conn != None:
+      self.conn.close()
 
   #
   # Logs the Fractal of the Day
