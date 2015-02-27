@@ -95,3 +95,4 @@ db = Database()
 # Start reading stream
 print "reading mentions"
 stream.filter(track=["fractal_bot"])
+print "script stopped running"
