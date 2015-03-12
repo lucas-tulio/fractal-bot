@@ -16,7 +16,7 @@ sentences = [
 ]
 
 def log(text):
-  print str(datetime.now()) + ": " + text
+  print str(datetime.now()) + ": " + str(text)
 
 def send_fractal(tweet):
 
@@ -84,6 +84,9 @@ class Listener(StreamListener):
     log(status)
     db._disconnect()
     sys.exit()
+  def on_timeout(self):
+    log("Timed out")
+    return True
 
 # Start Fractal generator
 fractal = Fractal()
