@@ -87,6 +87,10 @@ class Listener(StreamListener):
   def on_timeout(self):
     log("Timed out")
     return True
+  def on_disconnect(self, notice):
+    log("disconnected")
+    log(str(notice))
+    return
 
 # Start Fractal generator
 fractal = Fractal()
