@@ -18,7 +18,7 @@ class Fractal:
     # Type
     self.set_type = set_details["type"]
     self.max_iterations = set_details["maxIterations"]
-    print self.set_type
+    print(self.set_type)
 
     # Offset
     self.zoom = set_details["zoom"]
@@ -82,7 +82,7 @@ class Fractal:
 
     # Fractal of the day?
     if fotd:
-      print "Fractal of the Day!"
+      print("Fractal of the Day!")
       fractal_file_name = "fotd.png"
       width = 1920
       height = 1080
@@ -183,8 +183,8 @@ class Fractal:
 
       # Print progress
       if y % 10 == 0:
-        print str((y / height) * 100) + "%"
+        print(str((y / height) * 100) + "%")
 
     # Save
     im.save(fractal_file_name)
-    print "Done. File " + str(fractal_file_name) + " saved"
+    print("Done. File " + str(fractal_file_name) + " saved")

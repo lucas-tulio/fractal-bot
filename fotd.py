@@ -19,7 +19,7 @@ print(image.type)
 print "deletion link: imgur.com/delete/" + str(image._delete_or_id_hash)
 
 if image.link == "":
-  print "no link"
+  print("no link")
   sys.exit(0)
 
 # Log the Fractal of the Day
@@ -29,4 +29,4 @@ db.log_fotd(image.link, image._delete_or_id_hash, image.size)
 # Tweet
 twitter = Twitter()
 twitter.api.update_with_media("fotd.png", "Fractal of the day " + str(image.link) + " #fractal")
-print "done"
+print("done")
