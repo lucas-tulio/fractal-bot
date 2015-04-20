@@ -38,8 +38,8 @@ class Database:
       self.cur.execute("""INSERT INTO fotd (link, deletehash, size) VALUES (%s, %s, %s)""", (link, delete_hash, int(size)))
       self.conn.commit()
     except Exception as e:
-      print "Error logging fractal of the day"
-      print e
+      print("Error logging fractal of the day")
+      print(e)
     self._disconnect()
 
   #
@@ -56,8 +56,8 @@ class Database:
         return False
 
     except Exception as e:
-      print "Error running can_send for " + str(username)
-      print e
+      print("Error running can_send for " + str(username))
+      print(e)
 
     self._disconnect()
     return False
@@ -71,8 +71,8 @@ class Database:
       self.cur.execute("""INSERT INTO logs (username) VALUES (%s)""", (username))
       self.conn.commit()
     except Exception as e:
-      print "Error running save_send for " + str(username)
-      print e
+      print("Error running save_send for " + str(username))
+      print(e)
     self._disconnect()
 
   #
@@ -89,8 +89,8 @@ class Database:
         return True
 
     except Exception as e:
-      print "Error running blacklist check for " + str(username)
-      print e
+      print("Error running blacklist check for " + str(username))
+      print(e)
 
     self._disconnect()
     return False

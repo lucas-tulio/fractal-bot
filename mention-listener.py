@@ -16,7 +16,7 @@ sentences = [
 ]
 
 def log(text):
-  print str(datetime.now()) + ": " + str(text)
+  print(str(datetime.now()) + ": " + str(text))
 
 def send_fractal(tweet):
 
